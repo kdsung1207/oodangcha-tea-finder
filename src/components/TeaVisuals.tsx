@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Tea } from "@/lib/tea-quiz";
 import { TEA_INFO } from "@/lib/tea-quiz";
 
 export function TeaCup({ compact = false }: { compact?: boolean }) {
+  // Hides the browser's broken-image icon if public/hand-pinch.png hasn't
+  // been uploaded yet, instead of showing a jarring placeholder icon.
+  const [handMissing, setHandMissing] = useState(false);
   // A tall, slender tumbler rather than a squat teacup — grown taller, not
   // wider, so the 차고 badge (a fixed size in both variants) reads as small
   // against the cup's height specifically, not just smaller overall.
@@ -51,20 +55,23 @@ export function TeaCup({ compact = false }: { compact?: boolean }) {
       {/* Fingers pinching the 차고 capsule above the rim — about to drop it
           in, not inside the cup yet. The hand is the supplied illustration,
           used as-is (unedited) and sized well above the capsule. */}
-      <img
-        src="/hand-pinch.png"
-        alt=""
-        aria-hidden="true"
-        className={`absolute z-20 -translate-x-1/2 -rotate-[30deg] object-contain ${
-          compact ? "left-[58%] -top-4 h-28 w-40" : "left-[58%] -top-6 h-48 w-72"
-        }`}
-      />
+      {!handMissing && (
+        <img
+          src="/hand-pinch.png"
+          alt=""
+          aria-hidden="true"
+          onError={() => setHandMissing(true)}
+          className={`absolute z-20 -translate-x-1/2 -rotate-[30deg] object-contain ${
+            compact ? "left-[58%] -top-4 h-28 w-40" : "left-[58%] -top-6 h-48 w-72"
+          }`}
+        />
+      )}
       <div
         className={`absolute z-20 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-md border border-brand-deep/10 bg-highlight font-bold leading-none text-highlight-foreground shadow-soft ${
-          compact ? "top-16 h-5 w-10 text-[8px]" : "top-32 h-7 w-14 text-[9px]"
+          compact ? "top-16 h-6 w-12 text-[8px]" : "top-32 h-8 w-16 text-[9px]"
         }`}
       >
-        차고
+        백다담
       </div>
     </div>
   );
@@ -103,8 +110,8 @@ export function BrewAnimation({ tea, onDone }: { tea: Tea; onDone: () => void })
       <div className="relative h-[30rem] w-full max-w-md">
         {/* capsule falls in, then fully melts away — nothing round is left behind */}
         <motion.div
-          className="absolute left-1/2 top-0 z-20 flex h-14 w-14 items-center justify-center rounded-full border border-brand-deep/15 bg-highlight text-xs font-bold text-highlight-foreground shadow-lift"
-          style={{ marginLeft: -28 }}
+          className="absolute left-1/2 top-0 z-20 flex h-9 w-16 items-center justify-center rounded-md border border-brand-deep/15 bg-highlight text-[10px] font-bold text-highlight-foreground shadow-lift"
+          style={{ marginLeft: -32 }}
           initial={{ y: -30, rotate: -18, scale: 1, opacity: 1 }}
           animate={{
             y: [-30, 150, 150],
@@ -119,7 +126,7 @@ export function BrewAnimation({ tea, onDone }: { tea: Tea; onDone: () => void })
             ease: ["easeIn", "easeIn", "easeIn"],
           }}
         >
-          차고
+          백다담
         </motion.div>
 
         <div className="absolute bottom-6 left-1/2 h-80 w-96 -translate-x-1/2 overflow-hidden rounded-b-[5.5rem] border-2 border-brand-deep/20 bg-card/40 shadow-lift">
