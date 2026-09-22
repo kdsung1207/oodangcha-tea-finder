@@ -54,8 +54,15 @@ function AdminPage() {
   const login = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      await adminLogin({ data: { password } });
-      await load(true);
+      // adminLogin now returns the signup rows directly in the same response
+      // that sets the auth cookie, so the very first screen after a correct
+      // password never depends on a second request already carrying that
+      // brand-new cookie (that race was what bounced people back to the
+      // password screen even with the right password).
+      const result = await adminLogin({ data: { password } });
+      setRows(result.rows);
+      setAuthenticated(true);
+      setLoading(false);
       setPassword("");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "로그인하지 못했습니다.");
