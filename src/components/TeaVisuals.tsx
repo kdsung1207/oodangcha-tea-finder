@@ -70,7 +70,7 @@ export function TeaCup({ compact = false }: { compact?: boolean }) {
       )}
       <div
         className={`absolute z-20 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-md border border-brand-deep/10 bg-highlight font-bold leading-none text-highlight-foreground shadow-soft ${
-          compact ? "top-16 h-[14px] w-7 text-[4.5px]" : "top-32 h-[18px] w-9 text-[5.5px]"
+          compact ? "top-24 h-[14px] w-7 text-[4.5px]" : "top-[10.5rem] h-[18px] w-9 text-[5.5px]"
         }`}
       >
         백다담
