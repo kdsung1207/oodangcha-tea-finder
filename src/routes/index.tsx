@@ -374,10 +374,18 @@ function SignupSection({ tea }: { tea: Tea }) {
 }
 
 const steps = [
-  { icon: Sparkles, title: "차고를 컵에 넣기" },
-  { icon: Droplets, title: "물 넣기" },
-  { icon: Coffee, title: "녹이기" },
-  { icon: Heart, title: "마시기" },
+  {
+    icon: Sparkles,
+    title: "차고를 컵에 넣기",
+    description: "백다담 차고 한 알을 깨끗한 컵에 넣어요.",
+  },
+  { icon: Droplets, title: "물 넣기", description: "따뜻한 물을 컵에 부어요." },
+  { icon: Coffee, title: "녹이기", description: "잠시 기다리면 차고가 녹으며 진해져요." },
+  {
+    icon: Heart,
+    title: "마시기",
+    description: "티백 없이 바로 마시는 차, 오늘의 한 잔 완성.",
+  },
 ];
 function HowTo() {
   return (
@@ -389,7 +397,7 @@ function HowTo() {
           description="물을 넣으면 바로 마시는 차. 딱 4단계예요."
         />
         <div className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {steps.map(({ icon: Icon, title }, index) => (
+          {steps.map(({ icon: Icon, title, description }, index) => (
             <div
               key={title}
               className="rounded-2xl border border-brand-deep/10 bg-card p-5 shadow-soft"
@@ -397,6 +405,7 @@ function HowTo() {
               <span className="text-xs font-black text-brand-warm">0{index + 1}</span>
               <Icon className="my-7 h-9 w-9 text-brand-leaf" />
               <p className="font-bold">{title}</p>
+              <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{description}</p>
             </div>
           ))}
         </div>
