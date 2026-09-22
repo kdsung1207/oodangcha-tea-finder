@@ -105,7 +105,7 @@ function Index() {
         </header>
         <div className="mx-auto grid w-full max-w-6xl flex-1 items-center gap-2 pt-12 lg:grid-cols-[1.1fr_.9fr] lg:pt-4">
           <div className="relative z-10">
-            <span className="font-brand-serif inline-flex rounded-full bg-highlight px-4 py-2 text-sm font-bold text-highlight-foreground">
+            <span className="font-brand-serif inline-flex rounded-full border border-brand-warm/40 px-4 py-2 text-sm font-bold tracking-wide text-brand-warm">
               백다담
             </span>
             <h1 className="font-brand-serif mt-7 text-5xl font-black leading-[1.07] sm:text-7xl lg:text-8xl">
@@ -143,7 +143,7 @@ function Index() {
             </span>
           </div>
         </div>
-        <ChevronDown className="mx-auto mt-3 animate-bounce text-brand-warm" aria-hidden="true" />
+        <ChevronDown className="gentle-float mx-auto mt-3 text-brand-warm" aria-hidden="true" />
       </section>
       <AnimatePresence>
         {flow === "quiz" && (
@@ -188,13 +188,33 @@ function SectionTitle({
 }) {
   return (
     <div>
-      {eyebrow && <p className="mb-2 text-xs font-black uppercase text-brand-warm">{eyebrow}</p>}
-      <h2 className="font-brand-serif break-keep text-3xl font-black leading-tight sm:text-4xl">
+      {eyebrow && (
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-brand-warm">
+          {eyebrow}
+        </p>
+      )}
+      <h2 className="font-brand-serif break-keep text-3xl font-bold leading-tight sm:text-4xl">
         {title}
       </h2>
       {description && (
         <p className="mt-3 max-w-2xl leading-7 text-muted-foreground">{description}</p>
       )}
+    </div>
+  );
+}
+
+function SectionDivider() {
+  // A small, quiet mark between sections instead of a hard line — the kind
+  // of restrained detail that reads as an established brand rather than a
+  // generic app screen.
+  return (
+    <div
+      className="mx-auto flex max-w-xs items-center justify-center gap-3 px-5 py-1 text-brand-warm/50"
+      aria-hidden="true"
+    >
+      <span className="h-px flex-1 bg-current" />
+      <span className="h-1.5 w-1.5 rotate-45 bg-current" />
+      <span className="h-px flex-1 bg-current" />
     </div>
   );
 }
@@ -220,7 +240,7 @@ function ResultExperience({
     >
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-10 sm:py-24">
         <div className="flex items-center justify-between">
-          <span className="rounded-full bg-highlight px-4 py-2 text-sm font-bold text-highlight-foreground">
+          <span className="rounded-full border border-brand-warm/40 px-4 py-2 text-sm font-bold tracking-wide text-brand-warm">
             오늘의 오당차
           </span>
           <Button variant="link" onClick={onRestart} className="px-0 text-muted-foreground">
@@ -251,7 +271,7 @@ function ResultExperience({
             </Button>
           </div>
           <div
-            className="relative flex min-h-80 items-center justify-center overflow-hidden rounded-2xl border border-brand-deep/10 bg-card shadow-soft"
+            className="relative flex min-h-80 items-center justify-center overflow-hidden rounded-2xl border border-brand-warm/25 bg-card shadow-soft"
             style={{ background: `color-mix(in oklab, ${info.soft} 24%, var(--card))` }}
           >
             {info.image ? (
@@ -273,6 +293,7 @@ function ResultExperience({
       </section>
       <SignupSection tea={tea} />
       <HowTo />
+      <SectionDivider />
       <Extras tea={tea} info={info} />
     </motion.div>
   );
@@ -431,7 +452,7 @@ function HowTo() {
           {steps.map(({ icon: Icon, title, description }, index) => (
             <div
               key={title}
-              className="flex flex-col items-center rounded-2xl border border-brand-deep/10 bg-card p-5 text-center shadow-soft"
+              className="flex flex-col items-center rounded-2xl border border-brand-deep/12 bg-card p-5 text-center"
             >
               <span className="text-xs font-black text-brand-warm">0{index + 1}</span>
               <Icon className="my-7 h-9 w-9 text-brand-leaf" />
@@ -488,7 +509,9 @@ function Extras({ tea, info }: { tea: Tea; info: (typeof TEA_INFO)[Tea] }) {
       <section className="bg-brand-deep px-5 py-16 text-primary-foreground sm:px-10">
         <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-2">
           <div className="rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-6">
-            <p className="text-xs font-bold text-brand-warm">NEW CUSTOMER COUPON</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-warm">
+              NEW CUSTOMER COUPON
+            </p>
             <h3 className="mt-3 text-2xl font-black">오늘의 추천 차고 10% 할인</h3>
             <div className="mt-6 flex items-center justify-between rounded-xl border border-primary-foreground/15 bg-primary-foreground/5 p-3">
               <code className="font-bold">{COUPON_CODE}</code>
@@ -532,12 +555,12 @@ function Extras({ tea, info }: { tea: Tea; info: (typeof TEA_INFO)[Tea] }) {
           <SectionTitle eyebrow="SHARE YOUR TEA" title="내 오당차 결과 공유하기" />
           <div
             ref={shareRef}
-            className="mt-9 rounded-2xl border border-brand-deep/10 bg-card p-7 shadow-lift sm:p-10"
+            className="mt-9 rounded-2xl border border-brand-warm/25 bg-card p-7 shadow-soft sm:p-10"
             style={{ background: `color-mix(in oklab, ${info.soft} 18%, var(--card))` }}
           >
             <div className="flex items-center justify-between">
-              <b>백다담</b>
-              <span className="rounded-full bg-highlight px-3 py-1 text-xs font-bold">
+              <b className="font-brand-serif">백다담</b>
+              <span className="rounded-full border border-brand-warm/40 px-3 py-1 text-xs font-bold tracking-wide text-brand-warm">
                 오늘의 오당차
               </span>
             </div>
