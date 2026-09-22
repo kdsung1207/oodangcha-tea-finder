@@ -130,7 +130,7 @@ export function BrewAnimation({ tea, onDone }: { tea: Tea; onDone: () => void })
             transition={{ duration: bloomDuration, delay: dissolveEnd, ease: "easeInOut" }}
           >
             <span
-              className="font-display text-5xl font-black text-white"
+              className="font-brand-serif text-5xl font-black text-white"
               style={{ textShadow: "0 2px 16px rgba(0,0,0,0.35)" }}
             >
               {tea}
