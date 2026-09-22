@@ -55,7 +55,7 @@ export function QuizOverlay({
             <span className="text-sm font-bold text-brand-warm">
               QUESTION {String(step + 1).padStart(2, "0")}
             </span>
-            <h2 className="mt-3 font-display text-3xl font-black leading-tight sm:text-5xl">
+            <h2 className="mt-3 font-brand-serif break-keep text-3xl font-black leading-tight sm:text-5xl">
               {question.title}
             </h2>
             <div className="mt-10 grid gap-3 sm:mt-14 sm:grid-cols-2">
