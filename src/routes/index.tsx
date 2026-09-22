@@ -223,10 +223,20 @@ function ResultExperience({
             className="relative flex min-h-80 items-center justify-center overflow-hidden rounded-2xl border border-brand-deep/10 bg-card shadow-soft"
             style={{ background: `color-mix(in oklab, ${info.soft} 24%, var(--card))` }}
           >
-            <TeaCup compact />
-            <span className="absolute bottom-5 rounded-full bg-card/80 px-3 py-1.5 text-[11px] text-muted-foreground">
-              제품 이미지 자리
-            </span>
+            {info.image ? (
+              <img
+                src={info.image}
+                alt={`백다담 ${tea} 제품 이미지`}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <>
+                <TeaCup compact />
+                <span className="absolute bottom-5 rounded-full bg-card/80 px-3 py-1.5 text-[11px] text-muted-foreground">
+                  제품 이미지 자리
+                </span>
+              </>
+            )}
           </div>
         </div>
       </section>
