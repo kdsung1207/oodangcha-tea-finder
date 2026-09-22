@@ -59,31 +59,7 @@ export const submitSignup = createServerFn({ method: "POST" })
     return { signup: Array.isArray(inserted) ? inserted[0] : inserted };
   });
 
-export const adminLogin = createServerFn({ method: "POST" })
-  .inputValidator((input) => passwordSchema.parse(input))
-  .handler(async ({ data }) => {
-    const secret = process.env["ADMIN_PASSWORD"];
-    if (!secret || !secureEqual(data.password, secret))
-      throw new Error("비밀번호가 올바르지 않습니다.");
-    setResponseHeader(
-      "Set-Cookie",
-      `${COOKIE}=${token(secret)}; Path=/; HttpOnly; SameSite=Strict; Max-Age=28800; Secure`,
-    );
-    return { ok: true };
-  });
-
-export const adminLogout = createServerFn({ method: "POST" }).handler(async () => {
-  setResponseHeader(
-    "Set-Cookie",
-    `${COOKIE}=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0; Secure`,
-  );
-  return { ok: true };
-});
-
-export const getAdminSignups = createServerFn({ method: "GET" }).handler(async () => {
-  const secret = process.env["ADMIN_PASSWORD"];
-  if (!secret) throw new Error("관리자 비밀번호가 설정되지 않았습니다.");
-  assertAdmin(secret);
+async function fetchSignupRows() {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const { data, error } = await supabaseAdmin
     .from("signups")
@@ -92,4 +68,39 @@ export const getAdminSignups = createServerFn({ method: "GET" }).handler(async (
     .order("created_at");
   if (error) throw new Error("신청 목록을 불러오지 못했습니다.");
   return data;
+}
+
+export const adminLogin = createServerFn({ method: "POST" })
+  .inputValidator((input) => passwordSchema.parse(input))
+  .handler(async ({ data }) => {
+    const secret = process.env["ADMIN_PASSWORD"];
+    if (!secret || !secureEqual(data.password, secret))
+      throw new Error("비밀번호가 올바르지 않습니다.");
+    setResponseHeader(
+      "Set-Cookie",
+      `${COOKIE}=${token(secret)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=28800; Secure`,
+    );
+    // Return the signup rows in this same response, rather than making the
+    // client immediately fire a second request that depends on the
+    // just-issued cookie having already round-tripped through the browser.
+    // That race was bouncing a correct password straight back to the login
+    // screen: adminLogin would succeed, but the follow-up getAdminSignups
+    // call could still see no cookie yet and fail assertAdmin.
+    const rows = await fetchSignupRows();
+    return { ok: true, rows };
+  });
+
+export const adminLogout = createServerFn({ method: "POST" }).handler(async () => {
+  setResponseHeader(
+    "Set-Cookie",
+    `${COOKIE}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0; Secure`,
+  );
+  return { ok: true };
+});
+
+export const getAdminSignups = createServerFn({ method: "GET" }).handler(async () => {
+  const secret = process.env["ADMIN_PASSWORD"];
+  if (!secret) throw new Error("관리자 비밀번호가 설정되지 않았습니다.");
+  assertAdmin(secret);
+  return fetchSignupRows();
 });
