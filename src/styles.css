@@ -7,6 +7,7 @@
 @theme inline {
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
+  --font-brand-serif: var(--font-brand-serif);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -45,6 +46,9 @@
   --radius: 0.65rem;
   --font-body: "Pretendard Variable", Pretendard, "Noto Sans KR", sans-serif;
   --font-display: "Pretendard Variable", Pretendard, "Noto Sans KR", sans-serif;
+  /* Elegant brush/gungseo-style serif for the landing screen only — loaded
+     via Google Fonts link tag in the root route head. */
+  --font-brand-serif: "Song Myung", "Nanum Myeongjo", serif;
   --background: oklch(0.955 0.018 75);
   --foreground: oklch(0.25 0.038 55);
   --card: oklch(0.985 0.009 78);
