@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BrewAnimation, TeaCup } from "@/components/TeaVisuals";
 import { QuizOverlay } from "@/components/QuizOverlay";
+import { BrandMark } from "@/components/BrandMark";
 import {
   buildReason,
   calculateTeaResult,
@@ -90,22 +91,24 @@ function Index() {
   };
   return (
     <main className="paper-grain min-h-screen overflow-x-hidden">
+      <BrandMark />
       <section className="relative flex min-h-[92dvh] flex-col px-5 pb-8 pt-5 sm:px-10 lg:px-16">
         <header className="mx-auto flex w-full max-w-6xl items-start justify-between">
-          <div>
-            <p className="font-display text-xl font-black">백다담</p>
-            <p className="mt-1 text-xs text-muted-foreground">오늘, 당신의 차 한잔</p>
-          </div>
+          {/* Logo now sits in the fixed BrandMark at the very top-left corner
+              of every screen, so this header only carries the tagline. */}
+          <p className="mt-1 pl-11 text-xs text-muted-foreground sm:pl-12">
+            오늘, 당신의 차 한잔
+          </p>
           <span className="rounded-full border border-brand-deep/10 bg-card/70 px-3 py-1.5 text-xs font-semibold">
-            BAEKDADAM TEA LAB
+            100DADAM TEA LAB
           </span>
         </header>
         <div className="mx-auto grid w-full max-w-6xl flex-1 items-center gap-2 pt-12 lg:grid-cols-[1.1fr_.9fr] lg:pt-4">
           <div className="relative z-10">
-            <span className="inline-flex rounded-full bg-highlight px-4 py-2 text-sm font-bold text-highlight-foreground">
+            <span className="font-brand-serif inline-flex rounded-full bg-highlight px-4 py-2 text-sm font-bold text-highlight-foreground">
               백다담
             </span>
-            <h1 className="mt-7 font-display text-5xl font-black leading-[1.07] sm:text-7xl lg:text-8xl">
+            <h1 className="font-brand-serif mt-7 text-5xl font-black leading-[1.07] sm:text-7xl lg:text-8xl">
               오늘, 당신의
               <br />차 한잔
               <br />
