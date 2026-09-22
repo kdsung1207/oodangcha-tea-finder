@@ -62,7 +62,9 @@ export function TeaCup({ compact = false }: { compact?: boolean }) {
           aria-hidden="true"
           onError={() => setHandMissing(true)}
           className={`absolute z-20 -translate-x-1/2 -rotate-[30deg] object-contain ${
-            compact ? "left-[58%] -top-16 h-44 w-64" : "left-[58%] -top-28 h-72 w-[26rem]"
+            compact
+              ? "left-[58%] -top-24 h-[16.5rem] w-96"
+              : "left-[58%] -top-[10.5rem] h-[27rem] w-[39rem]"
           }`}
         />
       )}
