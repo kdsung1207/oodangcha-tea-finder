@@ -1,3 +1,4 @@
+import { Hand } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Tea } from "@/lib/tea-quiz";
 import { TEA_INFO } from "@/lib/tea-quiz";
@@ -9,20 +10,23 @@ export function TeaCup({ compact = false }: { compact?: boolean }) {
   return (
     <div
       className={`relative mx-auto ${compact ? "h-64 w-40" : "h-[30rem] w-56"}`}
-      aria-label="김이 피어오르는 세로로 긴 찻잔 일러스트"
+      aria-label="손가락으로 차고를 집어 컵에 넣으려는 세로로 긴 찻잔 일러스트"
     >
       <span
         className={`steam absolute rounded-full bg-brand-warm/30 ${
-          compact ? "left-[40%] top-16 h-10 w-1" : "left-[42%] top-44 h-16 w-1"
+          compact ? "left-[24%] top-16 h-10 w-1" : "left-[26%] top-44 h-16 w-1"
         }`}
       />
       <span
         className={`steam steam-delay absolute rounded-full bg-brand-warm/25 ${
-          compact ? "left-[56%] top-12 h-12 w-1" : "left-[55%] top-40 h-20 w-1"
+          compact ? "left-[74%] top-12 h-12 w-1" : "left-[73%] top-40 h-20 w-1"
         }`}
       />
+      {/* Cup body sits above the saucer in stacking order (z-10 over z-0) so
+          its base reads as resting on top of the saucer, not tucked under
+          the saucer's edge. */}
       <div
-        className={`absolute rounded-t-2xl border-2 border-brand-deep/15 bg-card shadow-soft ${
+        className={`absolute z-10 rounded-t-2xl border-2 border-brand-deep/15 bg-card shadow-soft ${
           compact
             ? "bottom-2 left-3 right-6 h-40 rounded-b-[0.9rem]"
             : "bottom-4 left-4 right-7 h-64 rounded-b-[1.25rem]"
@@ -36,18 +40,27 @@ export function TeaCup({ compact = false }: { compact?: boolean }) {
       </div>
       {/* Saucer the cup rests on, in place of the handle. */}
       <div
-        className={`absolute left-1/2 -translate-x-1/2 rounded-[50%] border border-brand-deep/15 bg-card shadow-soft ${
+        className={`absolute left-1/2 z-0 -translate-x-1/2 rounded-[50%] border border-brand-deep/15 bg-card shadow-soft ${
           compact ? "bottom-1 h-2.5 w-44" : "bottom-1 h-4 w-64"
         }`}
       />
       <div
-        className={`absolute left-1/2 -translate-x-1/2 rounded-[50%] bg-brand-deep/5 ${
+        className={`absolute left-1/2 z-0 -translate-x-1/2 rounded-[50%] bg-brand-deep/5 ${
           compact ? "bottom-2 h-1 w-32" : "bottom-2.5 h-1.5 w-48"
         }`}
       />
+      {/* Fingers pinching the 차고 capsule above the rim — about to drop it
+          in, not inside the cup yet. */}
+      <Hand
+        aria-hidden="true"
+        strokeWidth={1.5}
+        className={`absolute z-20 -translate-x-1/2 -rotate-[125deg] text-brand-deep/70 ${
+          compact ? "left-[58%] top-8 h-11 w-11" : "left-[58%] top-16 h-20 w-20"
+        }`}
+      />
       <div
-        className={`absolute left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border border-brand-deep/10 bg-highlight text-xs font-bold text-highlight-foreground shadow-soft ${
-          compact ? "bottom-32 h-9 w-9" : "bottom-52 h-12 w-12"
+        className={`absolute z-20 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border border-brand-deep/10 bg-highlight font-bold text-highlight-foreground shadow-soft ${
+          compact ? "top-14 h-7 w-7 text-[9px]" : "top-28 h-10 w-10 text-[10px]"
         }`}
       >
         차고
