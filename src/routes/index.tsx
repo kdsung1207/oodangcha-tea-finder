@@ -132,13 +132,15 @@ function Index() {
             </div>
           </div>
           <div className="relative mt-4 flex flex-col items-center self-end lg:mt-0">
-            {/* Scaled up as one unit (cup + steam + the tiny 차고 badge all
-                grow together) so the icon reads bigger on the landing screen
-                while the 차고 badge stays visibly tiny next to it. */}
-            <div className="scale-125 sm:scale-150">
+            {/* TeaCup itself is now a tall tumbler shape (grown in height,
+                not width) with a fixed-size 차고 badge, so the badge reads
+                as small against the cup's height. A modest extra scale on
+                larger screens gives it more presence without the mobile
+                layout getting out of hand. */}
+            <div className="sm:scale-110">
               <TeaCup />
             </div>
-            <span className="mt-6 rounded-full border border-border bg-card px-3 py-1.5 text-[11px] text-muted-foreground sm:mt-10">
+            <span className="mt-8 rounded-full border border-border bg-card px-3 py-1.5 text-[11px] text-muted-foreground sm:mt-12">
               제품 이미지 자리 · 브랜드 제공 시 교체
             </span>
           </div>
