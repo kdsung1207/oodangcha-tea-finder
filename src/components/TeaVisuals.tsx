@@ -24,8 +24,8 @@ export function TeaCup({ compact = false }: { compact?: boolean }) {
       <div
         className={`absolute rounded-t-2xl border-2 border-brand-deep/15 bg-card shadow-soft ${
           compact
-            ? "bottom-6 left-3 right-6 h-40 rounded-b-[3rem]"
-            : "bottom-8 left-4 right-7 h-64 rounded-b-[5rem]"
+            ? "bottom-8 left-3 right-6 h-40 rounded-b-[3rem]"
+            : "bottom-10 left-4 right-7 h-64 rounded-b-[5rem]"
         }`}
       >
         <div
@@ -34,14 +34,15 @@ export function TeaCup({ compact = false }: { compact?: boolean }) {
           }`}
         />
       </div>
+      {/* Saucer the cup rests on, in place of the handle. */}
       <div
-        className={`absolute rounded-r-full border-l-0 border-brand-deep/15 ${
-          compact ? "bottom-20 right-1 h-10 w-10 border-[7px]" : "bottom-36 right-3 h-20 w-20 border-[10px]"
+        className={`absolute left-1/2 -translate-x-1/2 rounded-[50%] border border-brand-deep/15 bg-card shadow-soft ${
+          compact ? "bottom-1 h-2.5 w-44" : "bottom-1 h-4 w-64"
         }`}
       />
       <div
-        className={`absolute rounded-[50%] bg-brand-deep/10 ${
-          compact ? "bottom-2 left-1 right-3 h-3" : "bottom-3 left-1 right-3 h-5"
+        className={`absolute left-1/2 -translate-x-1/2 rounded-[50%] bg-brand-deep/5 ${
+          compact ? "bottom-2 h-1 w-32" : "bottom-2.5 h-1.5 w-48"
         }`}
       />
       <div
