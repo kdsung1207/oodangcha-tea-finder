@@ -16,7 +16,11 @@ export function QuizOverlay({
   onBack: () => void;
   onClose: () => void;
 }) {
-  const question = QUESTIONS[step];
+  // Defensive: step should always be a valid QUESTIONS index, but a stray
+  // out-of-range value (e.g. a race from a very fast double-tap) must never
+  // crash this screen — that used to freeze the whole app on the error page.
+  const question = QUESTIONS[Math.min(step, QUESTIONS.length - 1)];
+  if (!question) return null;
   return (
     <div className="fixed inset-0 z-40 overflow-y-auto bg-background safe-bottom">
       <header className="mx-auto flex w-full max-w-2xl items-center justify-between px-5 py-5">
