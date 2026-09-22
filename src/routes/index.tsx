@@ -477,21 +477,20 @@ function Extras({ tea, info }: { tea: Tea; info: (typeof TEA_INFO)[Tea] }) {
               </Button>
             </div>
           </div>
-          <div className="rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-6">
-            <p className="font-bold leading-6">
+          <div className="flex flex-col items-center rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-6 text-center">
+            <p className="text-xl font-bold leading-8 sm:text-2xl">
               차고를 처음 접했을 때,
               <br />
               어떻게 먹는 제품인지 이해하기 쉬웠나요?
             </p>
-            <div className="mt-6 flex gap-2">
+            <div className="mt-7 flex justify-center gap-3">
               {[1, 2, 3, 4, 5].map((score) => (
                 <Button
                   key={score}
                   variant={rating === score ? "secondary" : "outline"}
-                  size="icon"
                   aria-label={`${score}점`}
                   onClick={() => setRating(score)}
-                  className="border-primary-foreground/20 bg-transparent text-primary-foreground hover:text-foreground"
+                  className="h-14 w-14 rounded-full border-primary-foreground/20 bg-transparent text-lg font-bold text-primary-foreground hover:text-foreground"
                 >
                   {score}
                 </Button>
