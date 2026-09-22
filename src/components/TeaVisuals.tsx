@@ -55,7 +55,7 @@ export function TeaCup({ compact = false }: { compact?: boolean }) {
       {/* Fingers pinching the 차고 capsule above the rim — about to drop it
           in, not inside the cup yet. The hand is the supplied illustration,
           used as-is (unedited) and sized well above the capsule. */}
-      {!handMissing && (
+      {!compact && !handMissing && (
         <img
           src="/hand-pinch.png"
           alt=""
