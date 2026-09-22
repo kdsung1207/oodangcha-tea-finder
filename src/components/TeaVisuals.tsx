@@ -3,19 +3,52 @@ import type { Tea } from "@/lib/tea-quiz";
 import { TEA_INFO } from "@/lib/tea-quiz";
 
 export function TeaCup({ compact = false }: { compact?: boolean }) {
+  // A tall, slender tumbler rather than a squat teacup — grown taller, not
+  // wider, so the 차고 badge (a fixed size in both variants) reads as small
+  // against the cup's height specifically, not just smaller overall.
   return (
     <div
-      className={`relative mx-auto ${compact ? "h-40 w-48" : "h-64 w-72"}`}
-      aria-label="김이 피어오르는 따뜻한 찻잔 일러스트"
+      className={`relative mx-auto ${compact ? "h-64 w-40" : "h-[30rem] w-56"}`}
+      aria-label="김이 피어오르는 세로로 긴 찻잔 일러스트"
     >
-      <span className="steam absolute left-[42%] top-3 h-16 w-1 rounded-full bg-brand-warm/30" />
-      <span className="steam steam-delay absolute left-[55%] top-0 h-20 w-1 rounded-full bg-brand-warm/25" />
-      <div className="absolute bottom-8 left-6 right-10 h-28 rounded-b-[4rem] rounded-t-2xl border-2 border-brand-deep/15 bg-card shadow-soft">
-        <div className="absolute left-3 right-3 top-2 h-5 rounded-[50%] bg-brand-warm/65" />
+      <span
+        className={`steam absolute rounded-full bg-brand-warm/30 ${
+          compact ? "left-[40%] top-16 h-10 w-1" : "left-[42%] top-44 h-16 w-1"
+        }`}
+      />
+      <span
+        className={`steam steam-delay absolute rounded-full bg-brand-warm/25 ${
+          compact ? "left-[56%] top-12 h-12 w-1" : "left-[55%] top-40 h-20 w-1"
+        }`}
+      />
+      <div
+        className={`absolute rounded-t-2xl border-2 border-brand-deep/15 bg-card shadow-soft ${
+          compact
+            ? "bottom-6 left-3 right-6 h-40 rounded-b-[3rem]"
+            : "bottom-8 left-4 right-7 h-64 rounded-b-[5rem]"
+        }`}
+      >
+        <div
+          className={`absolute rounded-[50%] bg-brand-warm/65 ${
+            compact ? "left-2 right-2 top-1.5 h-3" : "left-3 right-3 top-2 h-5"
+          }`}
+        />
       </div>
-      <div className="absolute bottom-16 right-0 h-16 w-16 rounded-r-full border-[10px] border-l-0 border-brand-deep/15" />
-      <div className="absolute bottom-3 left-2 right-4 h-5 rounded-[50%] bg-brand-deep/10" />
-      <div className="absolute bottom-20 left-1/2 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border border-brand-deep/10 bg-highlight text-xs font-bold text-highlight-foreground shadow-soft">
+      <div
+        className={`absolute rounded-r-full border-l-0 border-brand-deep/15 ${
+          compact ? "bottom-20 right-1 h-10 w-10 border-[7px]" : "bottom-36 right-3 h-20 w-20 border-[10px]"
+        }`}
+      />
+      <div
+        className={`absolute rounded-[50%] bg-brand-deep/10 ${
+          compact ? "bottom-2 left-1 right-3 h-3" : "bottom-3 left-1 right-3 h-5"
+        }`}
+      />
+      <div
+        className={`absolute left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border border-brand-deep/10 bg-highlight text-xs font-bold text-highlight-foreground shadow-soft ${
+          compact ? "bottom-32 h-9 w-9" : "bottom-52 h-12 w-12"
+        }`}
+      >
         차고
       </div>
     </div>
