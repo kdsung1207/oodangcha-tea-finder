@@ -70,7 +70,7 @@ export function TeaCup({ compact = false }: { compact?: boolean }) {
       )}
       <div
         className={`absolute z-20 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-md border border-brand-deep/10 bg-highlight font-bold leading-none text-highlight-foreground shadow-soft ${
-          compact ? "top-16 h-6 w-12 text-[8px]" : "top-32 h-8 w-16 text-[9px]"
+          compact ? "top-16 h-3 w-6 text-[4px]" : "top-32 h-4 w-8 text-[5px]"
         }`}
       >
         백다담
@@ -112,8 +112,8 @@ export function BrewAnimation({ tea, onDone }: { tea: Tea; onDone: () => void })
       <div className="relative h-[30rem] w-full max-w-md">
         {/* capsule falls in, then fully melts away — nothing round is left behind */}
         <motion.div
-          className="absolute left-1/2 top-0 z-20 flex h-9 w-16 items-center justify-center rounded-md border border-brand-deep/15 bg-highlight text-[10px] font-bold text-highlight-foreground shadow-lift"
-          style={{ marginLeft: -32 }}
+          className="absolute left-1/2 top-0 z-20 flex h-[18px] w-8 items-center justify-center rounded-md border border-brand-deep/15 bg-highlight text-[5px] font-bold text-highlight-foreground shadow-lift"
+          style={{ marginLeft: -16 }}
           initial={{ y: -30, rotate: -18, scale: 1, opacity: 1 }}
           animate={{
             y: [-30, 150, 150],
