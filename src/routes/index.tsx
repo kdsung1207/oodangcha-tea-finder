@@ -60,11 +60,20 @@ function Index() {
   const [answers, setAnswers] = useState<number[]>([]);
   const [tea, setTea] = useState<Tea>("루이보스차");
   const resultRef = useRef<HTMLDivElement>(null);
+  // Guards against a fast double-tap on an option: without this, a second
+  // tap fired before the first one's 180ms transition lands would read a
+  // stale `step` and schedule a second advance, skipping a question and
+  // eventually reading QUESTIONS[out-of-range] — undefined — which crashed
+  // the quiz screen and made it look like everything froze.
+  const advancingRef = useRef(false);
 
   const answer = (index: number) => {
+    if (advancingRef.current) return;
+    advancingRef.current = true;
     const next = [...answers.slice(0, step), index];
     setAnswers(next);
     window.setTimeout(() => {
+      advancingRef.current = false;
       if (step < QUESTIONS.length - 1) setStep((value) => value + 1);
       else {
         setTea(calculateTeaResult(next));
@@ -73,6 +82,7 @@ function Index() {
     }, 180);
   };
   const restart = () => {
+    advancingRef.current = false;
     setAnswers([]);
     setStep(0);
     setFlow("quiz");
