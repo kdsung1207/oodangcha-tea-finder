@@ -1,7 +1,68 @@
-import { Hand } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Tea } from "@/lib/tea-quiz";
 import { TEA_INFO } from "@/lib/tea-quiz";
+
+// A simple filled illustration (not a thin-line icon) of a hand pinching
+// something at its fingertip — a fist silhouette with a separate thumb
+// wrapping around the front, skin-tone fill with a dark cartoon outline.
+function PinchingHand({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 120 120" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M22 56
+           C14 42 18 24 34 15
+           C48 7 65 7 79 14
+           C92 21 97 34 96 47
+           L96 82
+           C96 94 86 101 71 101
+           C57 101 47 95 44 82
+           C41 72 32 68 26 62
+           C24 60 23 58 22 56 Z"
+        fill="#f3cba6"
+        stroke="#2a1e14"
+        strokeWidth="4"
+        strokeLinejoin="round"
+      />
+      {/* thumb, wrapping in front to meet the fingertip at the pinch point */}
+      <path
+        d="M44 82
+           C36 78 28 72 23 60
+           C20 54 21 47 27 44
+           C34 41 41 46 44 54
+           C47 62 47 72 44 82 Z"
+        fill="#f3cba6"
+        stroke="#2a1e14"
+        strokeWidth="4"
+        strokeLinejoin="round"
+      />
+      {/* knuckle crease lines for a bit of cartoon detail */}
+      <path
+        d="M40 26 C44 33 44 41 39 48"
+        stroke="#2a1e14"
+        strokeWidth="3"
+        strokeLinecap="round"
+        fill="none"
+        opacity="0.55"
+      />
+      <path
+        d="M58 20 C62 28 62 37 57 45"
+        stroke="#2a1e14"
+        strokeWidth="3"
+        strokeLinecap="round"
+        fill="none"
+        opacity="0.55"
+      />
+      <path
+        d="M76 21 C80 29 80 38 75 46"
+        stroke="#2a1e14"
+        strokeWidth="3"
+        strokeLinecap="round"
+        fill="none"
+        opacity="0.55"
+      />
+    </svg>
+  );
+}
 
 export function TeaCup({ compact = false }: { compact?: boolean }) {
   // A tall, slender tumbler rather than a squat teacup — grown taller, not
@@ -51,16 +112,14 @@ export function TeaCup({ compact = false }: { compact?: boolean }) {
       />
       {/* Fingers pinching the 차고 capsule above the rim — about to drop it
           in, not inside the cup yet. */}
-      <Hand
-        aria-hidden="true"
-        strokeWidth={1.5}
-        className={`absolute z-20 -translate-x-1/2 -rotate-[125deg] text-brand-deep/70 ${
+      <PinchingHand
+        className={`absolute z-20 -translate-x-1/2 -rotate-[105deg] ${
           compact ? "left-[58%] top-8 h-11 w-11" : "left-[58%] top-16 h-20 w-20"
         }`}
       />
       <div
-        className={`absolute z-20 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border border-brand-deep/10 bg-highlight font-bold text-highlight-foreground shadow-soft ${
-          compact ? "top-14 h-7 w-7 text-[9px]" : "top-28 h-10 w-10 text-[10px]"
+        className={`absolute z-20 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-md border border-brand-deep/10 bg-highlight font-bold leading-none text-highlight-foreground shadow-soft ${
+          compact ? "top-14 h-8 w-6 text-[8px]" : "top-28 h-11 w-9 text-[9px]"
         }`}
       >
         차고
