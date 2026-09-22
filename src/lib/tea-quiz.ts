@@ -10,30 +10,37 @@ export const TEAS = [
 export type Tea = (typeof TEAS)[number];
 export type Weights = Partial<Record<Tea, number>>;
 
-export const TEA_INFO: Record<Tea, { copy: string; note: string; color: string; soft: string }> = {
+export const TEA_INFO: Record<
+  Tea,
+  { copy: string; note: string; color: string; soft: string; image?: string }
+> = {
   루이보스차: {
     copy: "오늘의 속도를 다독이는 편안한 한 잔",
     note: "부드럽고 맑은 여운",
     color: "var(--tea-rooibos)",
     soft: "var(--tea-rooibos-soft)",
+    image: "/tea/rooibos.jpg",
   },
   홍차: {
     copy: "분주한 하루에 깊이를 더하는 한 잔",
     note: "풍부하고 클래식한 향",
     color: "var(--tea-black)",
     soft: "var(--tea-black-soft)",
+    image: "/tea/black.jpg",
   },
   보이차: {
     copy: "묵직한 중심이 필요한 오늘을 위한 한 잔",
     note: "깊고 차분한 풍미",
     color: "var(--tea-puer)",
     soft: "var(--tea-puer-soft)",
+    image: "/tea/puer.jpg",
   },
   우롱차: {
     copy: "기분 좋은 집중을 오래 이어주는 한 잔",
     note: "향긋하고 산뜻한 밸런스",
     color: "var(--tea-oolong)",
     soft: "var(--tea-oolong-soft)",
+    image: "/tea/oolong.jpg",
   },
   말차: {
     copy: "선명한 에너지로 오늘을 깨우는 한 잔",
