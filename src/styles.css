@@ -74,8 +74,11 @@
   --brand-paper: oklch(0.975 0.014 79);
   --highlight: oklch(0.91 0.1 79);
   --highlight-foreground: oklch(0.35 0.06 60);
-  --shadow-soft: 0 14px 38px color-mix(in oklab, var(--brand-deep) 9%, transparent);
-  --shadow-lift: 0 20px 55px color-mix(in oklab, var(--brand-deep) 16%, transparent);
+  /* Softer, lower-contrast shadows than before — a heavy floating-card look
+     reads more like a generic app than a tea brand, so these sit closer to
+     the surface. */
+  --shadow-soft: 0 6px 20px color-mix(in oklab, var(--brand-deep) 6%, transparent);
+  --shadow-lift: 0 10px 30px color-mix(in oklab, var(--brand-deep) 10%, transparent);
   --tea-rooibos: oklch(0.48 0.12 38);
   --tea-rooibos-soft: oklch(0.76 0.1 43);
   --tea-black: oklch(0.39 0.11 32);
@@ -144,6 +147,20 @@
 }
 .steam-delay {
   animation-delay: 0.9s;
+}
+@keyframes gentle-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+.gentle-float {
+  /* A slow, quiet drift in place of the default bouncy scroll cue — a small
+     detail, but a snappy bounce reads playful rather than composed. */
+  animation: gentle-float 2.6s ease-in-out infinite;
 }
 .paper-grain {
   background-image: radial-gradient(
