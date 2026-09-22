@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { adminLogin, adminLogout, getAdminSignups } from "@/lib/signups.functions";
 import { TIMESLOTS } from "@/lib/tea-quiz";
+import { BrandMark } from "@/components/BrandMark";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -99,12 +100,14 @@ function AdminPage() {
   if (loading && !authenticated)
     return (
       <div className="flex min-h-dvh items-center justify-center bg-background">
+        <BrandMark />
         <RefreshCw className="animate-spin text-brand-warm" />
       </div>
     );
   if (!authenticated)
     return (
       <main className="paper-grain flex min-h-dvh items-center justify-center bg-background px-5">
+        <BrandMark />
         <form
           onSubmit={login}
           className="w-full max-w-sm rounded-2xl border border-brand-deep/10 bg-card p-7 shadow-lift"
@@ -112,7 +115,7 @@ function AdminPage() {
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-highlight text-highlight-foreground">
             <LockKeyhole />
           </div>
-          <p className="mt-6 text-sm font-bold text-brand-warm">BAEKDADAM STAFF</p>
+          <p className="mt-6 text-sm font-bold text-brand-warm">100DADAM STAFF</p>
           <h1 className="mt-2 text-3xl font-black">오당차 운영 현황</h1>
           <p className="mt-2 text-sm text-muted-foreground">운영진 비밀번호를 입력해주세요.</p>
           <label className="mt-7 block text-sm font-bold">
@@ -133,6 +136,7 @@ function AdminPage() {
     );
   return (
     <main className="min-h-dvh bg-background px-4 py-6 sm:px-8">
+      <BrandMark />
       <div className="mx-auto max-w-7xl">
         <header className="flex flex-wrap items-end justify-between gap-4 border-b border-brand-deep/10 pb-6">
           <div>
