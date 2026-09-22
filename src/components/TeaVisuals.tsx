@@ -1,6 +1,4 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { useMemo } from "react";
-import { Coffee } from "lucide-react";
 import type { Tea } from "@/lib/tea-quiz";
 import { TEA_INFO } from "@/lib/tea-quiz";
 
@@ -28,41 +26,18 @@ export function BrewAnimation({ tea, onDone }: { tea: Tea; onDone: () => void })
   const reduced = useReducedMotion();
   const info = TEA_INFO[tea];
 
-  const dropDelay = reduced ? 0.1 : 0.25;
-  const dropDuration = reduced ? 0.15 : 0.8;
+  // Timeline (non-reduced-motion): drop falls → lands & fully dissolves →
+  // color spreads through the water and the tea name reveals in lockstep,
+  // all inside this one brewing screen → a short hold, then onDone.
+  const dropDelay = reduced ? 0.1 : 0.3;
+  const dropDuration = reduced ? 0.15 : 0.75;
   const impact = dropDelay + dropDuration;
-  const duration = reduced ? 0.4 : impact + 2.6;
-
-  // Irregular ink-cloud blobs: randomized once per result so the diffusion
-  // reads as organic fluid motion rather than a single scaling circle.
-  const blobs = useMemo(() => {
-    const count = 8;
-    return Array.from({ length: count }).map((_, i) => {
-      const angle = (i / count) * Math.PI * 2 + Math.random() * 0.7;
-      const dist = 30 + Math.random() * 48;
-      const size = 30 + Math.random() * 46;
-      return {
-        id: i,
-        x: Math.cos(angle) * dist,
-        y: Math.max(-6, Math.sin(angle) * dist * 0.65) + 26,
-        size,
-        delay: impact + Math.random() * 0.3,
-        dur: reduced ? 0.2 : 1.6 + Math.random() * 1,
-      };
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tea]);
-
-  const specks = useMemo(() => {
-    return Array.from({ length: 9 }).map((_, i) => ({
-      id: i,
-      x: (Math.random() - 0.5) * 150,
-      y: 30 + Math.random() * 90,
-      delay: impact + 0.5 + Math.random() * 1.4,
-      dur: 1.3 + Math.random() * 1.5,
-    }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tea]);
+  const dissolveDuration = reduced ? 0.15 : 0.5;
+  const dissolveEnd = impact + dissolveDuration;
+  const bloomDuration = reduced ? 0.15 : 1;
+  const colorSettled = dissolveEnd + bloomDuration;
+  const holdDuration = reduced ? 0.3 : 1.3;
+  const duration = reduced ? 0.6 : colorSettled + holdDuration;
 
   return (
     <motion.div
@@ -77,115 +52,97 @@ export function BrewAnimation({ tea, onDone }: { tea: Tea; onDone: () => void })
       >
         건너뛰고 결과 보기
       </button>
-      <div className="relative h-80 w-full max-w-sm">
+      <div className="relative h-[30rem] w-full max-w-md">
+        {/* capsule falls in, then fully melts away — nothing round is left behind */}
         <motion.div
-          className="absolute left-1/2 top-0 z-20 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border border-brand-deep/15 bg-highlight text-[11px] font-bold text-highlight-foreground shadow-lift"
-          initial={{ y: -30, rotate: -18 }}
-          animate={{ y: 188, rotate: 160 }}
-          transition={{ duration: dropDuration, delay: dropDelay, ease: "easeIn" }}
+          className="absolute left-1/2 top-0 z-20 flex h-14 w-14 items-center justify-center rounded-full border border-brand-deep/15 bg-highlight text-xs font-bold text-highlight-foreground shadow-lift"
+          style={{ marginLeft: -28 }}
+          initial={{ y: -30, rotate: -18, scale: 1, opacity: 1 }}
+          animate={{
+            y: [-30, 150, 150],
+            rotate: [-18, 140, 140],
+            scale: [1, 1, 0],
+            opacity: [1, 1, 0],
+          }}
+          transition={{
+            duration: dropDuration + dissolveDuration,
+            delay: dropDelay,
+            times: [0, dropDuration / (dropDuration + dissolveDuration), 1],
+            ease: ["easeIn", "easeIn", "easeIn"],
+          }}
         >
           차고
         </motion.div>
-        <div className="absolute bottom-4 left-1/2 h-52 w-64 -translate-x-1/2 overflow-hidden rounded-b-[4.5rem] border-2 border-brand-deep/20 bg-card/40 shadow-lift">
-          {/* liquid surface line */}
-          <div className="absolute inset-x-2 top-5 h-8 rounded-[50%] border border-brand-deep/10 bg-card/70" />
 
-          {/* impact ripples on contact */}
-          {[0, 1, 2].map((r) => (
+        <div className="absolute bottom-6 left-1/2 h-80 w-96 -translate-x-1/2 overflow-hidden rounded-b-[5.5rem] border-2 border-brand-deep/20 bg-card/40 shadow-lift">
+          {/* liquid surface line */}
+          <div className="absolute inset-x-3 top-6 h-9 rounded-[50%] border border-brand-deep/10 bg-card/70" />
+
+          {/* still, pale water before the tea takes hold */}
+          <div
+            className="absolute inset-x-0 bottom-0 top-6"
+            style={{ background: info.soft, opacity: 0.16 }}
+          />
+
+          {/* impact ripples right where the capsule lands */}
+          {[0, 1].map((r) => (
             <motion.span
               key={r}
-              className="absolute left-1/2 top-9 rounded-full border-2 -translate-x-1/2 -translate-y-1/2"
+              className="absolute left-1/2 top-11 -translate-x-1/2 -translate-y-1/2 rounded-full border-2"
               style={{ borderColor: info.color }}
-              initial={{ width: 4, height: 4, opacity: 0.55 }}
-              animate={{ width: 70 + r * 34, height: 70 + r * 34, opacity: 0 }}
+              initial={{ width: 4, height: 4, opacity: 0.5 }}
+              animate={{ width: 90 + r * 44, height: 90 + r * 44, opacity: 0 }}
               transition={{
-                duration: reduced ? 0.2 : 0.9,
-                delay: impact + r * 0.1,
+                duration: reduced ? 0.2 : 0.85,
+                delay: dissolveEnd - 0.15 + r * 0.12,
                 ease: "easeOut",
               }}
             />
           ))}
 
-          {/* gooey ink diffusion: several soft blobs merged via blur+contrast
-              so the spreading edge looks like real liquid, not a vector circle */}
-          <div
-            className="absolute inset-x-0 bottom-0 top-9 overflow-hidden"
-            style={{ filter: "blur(13px) contrast(24) saturate(1.35)" }}
-          >
-            <motion.span
-              className="absolute top-0 rounded-full"
-              style={{
-                left: "50%",
-                marginLeft: -15,
-                width: 30,
-                height: 30,
-                background: info.color,
-              }}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: [0, 2.4, 3.6], opacity: [0, 0.95, 0.88] }}
-              transition={{ duration: reduced ? 0.2 : 1.2, delay: impact, ease: "easeOut" }}
-            />
-            {blobs.map((b) => (
-              <motion.span
-                key={b.id}
-                className="absolute top-0 rounded-full"
-                style={{
-                  left: "50%",
-                  marginLeft: -b.size / 2,
-                  width: b.size,
-                  height: b.size,
-                  background: info.color,
-                }}
-                initial={{ x: 0, y: 0, scale: 0, opacity: 0 }}
-                animate={{
-                  x: [0, b.x * 0.55, b.x],
-                  y: [0, b.y * 1.25, b.y + 34],
-                  scale: [0.15, 1.25, 1],
-                  opacity: [0, 0.92, 0.75],
-                }}
-                transition={{ duration: b.dur, delay: b.delay, ease: "easeInOut" }}
-              />
-            ))}
-          </div>
-
-          {/* concentration wash: darker near the surface, settling evenly once diffused */}
+          {/* the capsule dissolves into one color wash that grows large enough
+              to cover every corner of the cup — plain blur only (no contrast
+              trick), so it never clips to black and never stalls as a
+              leftover round patch */}
           <motion.div
-            className="absolute inset-x-0 bottom-0 h-[88%]"
+            className="absolute rounded-full"
             style={{
-              background: `linear-gradient(to bottom, ${info.color} 0%, ${info.soft} 55%, ${info.soft} 100%)`,
-              mixBlendMode: "multiply",
+              left: "50%",
+              top: 24,
+              marginLeft: -260,
+              width: 520,
+              height: 520,
+              background: info.color,
+              filter: "blur(14px)",
             }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0.28, 0.62] }}
-            transition={{
-              duration: reduced ? 0.2 : 1.4,
-              delay: reduced ? 0.1 : impact + 0.9,
-              ease: "easeOut",
-            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 0.96 }}
+            transition={{ duration: bloomDuration, delay: dissolveEnd, ease: "easeInOut" }}
           />
 
-          {/* suspended tea particles for texture/depth */}
-          {specks.map((s) => (
-            <motion.span
-              key={s.id}
-              className="absolute left-1/2 top-1/2 h-1 w-1 rounded-full bg-brand-deep/40"
-              initial={{ x: s.x, y: s.y, opacity: 0 }}
-              animate={{ y: s.y - 18, opacity: [0, 0.55, 0] }}
-              transition={{
-                duration: s.dur,
-                delay: s.delay,
-                repeat: reduced ? 0 : Infinity,
-                repeatDelay: 0.5,
-              }}
-            />
-          ))}
+          {/* tea name: invisible against the plain water, revealed in lockstep
+              with the very same color spread above (not a separate timed
+              fade), so it only becomes legible as the tea actually fills in */}
+          <motion.div
+            className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: bloomDuration, delay: dissolveEnd, ease: "easeInOut" }}
+          >
+            <span
+              className="font-display text-5xl font-black text-white"
+              style={{ textShadow: "0 2px 16px rgba(0,0,0,0.35)" }}
+            >
+              {tea}
+            </span>
+          </motion.div>
 
           {/* glass caustic highlight for a wet, realistic sheen */}
           <div
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "linear-gradient(115deg, transparent 34%, rgba(255,255,255,0.4) 46%, transparent 60%)",
+                "linear-gradient(115deg, transparent 34%, rgba(255,255,255,0.35) 46%, transparent 60%)",
               mixBlendMode: "screen",
             }}
           />
