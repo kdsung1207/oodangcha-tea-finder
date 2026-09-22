@@ -24,8 +24,8 @@ export function TeaCup({ compact = false }: { compact?: boolean }) {
       <div
         className={`absolute rounded-t-2xl border-2 border-brand-deep/15 bg-card shadow-soft ${
           compact
-            ? "bottom-8 left-3 right-6 h-40 rounded-b-[3rem]"
-            : "bottom-10 left-4 right-7 h-64 rounded-b-[5rem]"
+            ? "bottom-2 left-3 right-6 h-40 rounded-b-[3rem]"
+            : "bottom-4 left-4 right-7 h-64 rounded-b-[5rem]"
         }`}
       >
         <div
