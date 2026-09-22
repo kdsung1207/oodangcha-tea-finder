@@ -132,8 +132,13 @@ function Index() {
             </div>
           </div>
           <div className="relative mt-4 flex flex-col items-center self-end lg:mt-0">
-            <TeaCup />
-            <span className="rounded-full border border-border bg-card px-3 py-1.5 text-[11px] text-muted-foreground">
+            {/* Scaled up as one unit (cup + steam + the tiny 차고 badge all
+                grow together) so the icon reads bigger on the landing screen
+                while the 차고 badge stays visibly tiny next to it. */}
+            <div className="scale-125 sm:scale-150">
+              <TeaCup />
+            </div>
+            <span className="mt-6 rounded-full border border-border bg-card px-3 py-1.5 text-[11px] text-muted-foreground sm:mt-10">
               제품 이미지 자리 · 브랜드 제공 시 교체
             </span>
           </div>
@@ -184,7 +189,9 @@ function SectionTitle({
   return (
     <div>
       {eyebrow && <p className="mb-2 text-xs font-black uppercase text-brand-warm">{eyebrow}</p>}
-      <h2 className="font-display text-3xl font-black leading-tight sm:text-4xl">{title}</h2>
+      <h2 className="font-brand-serif break-keep text-3xl font-black leading-tight sm:text-4xl">
+        {title}
+      </h2>
       {description && (
         <p className="mt-3 max-w-2xl leading-7 text-muted-foreground">{description}</p>
       )}
@@ -223,14 +230,25 @@ function ResultExperience({
         <div className="mt-12 grid items-center gap-10 lg:grid-cols-2">
           <div>
             <p className="text-lg font-bold">당신에게 어울리는 차고는</p>
-            <h2 className="mt-3 font-display text-6xl font-black text-brand-warm sm:text-8xl">
+            <h2 className="mt-3 font-brand-serif text-6xl font-black text-brand-warm sm:text-8xl">
               {tea}
             </h2>
-            <p className="mt-4 text-xl font-bold">{info.copy}</p>
+            <p className="mt-4 break-keep text-xl font-bold">{info.copy}</p>
             <div className="mt-9 border-l-2 border-brand-warm pl-5">
               <h3 className="font-bold">왜 이 차고를 추천했을까요?</h3>
-              <p className="mt-2 leading-7 text-muted-foreground">{buildReason(answers, tea)}</p>
+              <p className="mt-2 break-keep leading-7 text-muted-foreground">
+                {buildReason(answers, tea)}
+              </p>
             </div>
+            <Button asChild variant="outline" size="lg" className="mt-6 h-13 rounded-xl">
+              <a
+                href="https://www.instagram.com/100dadam/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {tea}를 활용한 음료 레시피 보러 가기 <ExternalLink />
+              </a>
+            </Button>
           </div>
           <div
             className="relative flex min-h-80 items-center justify-center overflow-hidden rounded-2xl border border-brand-deep/10 bg-card shadow-soft"
@@ -413,12 +431,14 @@ function HowTo() {
           {steps.map(({ icon: Icon, title, description }, index) => (
             <div
               key={title}
-              className="rounded-2xl border border-brand-deep/10 bg-card p-5 shadow-soft"
+              className="flex flex-col items-center rounded-2xl border border-brand-deep/10 bg-card p-5 text-center shadow-soft"
             >
               <span className="text-xs font-black text-brand-warm">0{index + 1}</span>
               <Icon className="my-7 h-9 w-9 text-brand-leaf" />
               <p className="font-bold">{title}</p>
-              <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{description}</p>
+              <p className="mt-1.5 break-keep text-sm leading-6 text-muted-foreground">
+                {description}
+              </p>
             </div>
           ))}
         </div>
@@ -524,10 +544,10 @@ function Extras({ tea, info }: { tea: Tea; info: (typeof TEA_INFO)[Tea] }) {
             <p className="mt-16 text-sm font-bold text-muted-foreground">
               오늘, 나에게 어울리는 차고
             </p>
-            <h3 className="mt-2 font-display text-5xl font-black text-brand-warm sm:text-7xl">
+            <h3 className="mt-2 font-brand-serif text-5xl font-black text-brand-warm sm:text-7xl">
               {tea}
             </h3>
-            <p className="mt-3 text-lg font-bold">{info.copy}</p>
+            <p className="mt-3 break-keep text-lg font-bold">{info.copy}</p>
             <p className="mt-14 break-all text-xs text-muted-foreground">{shareUrl}</p>
           </div>
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
