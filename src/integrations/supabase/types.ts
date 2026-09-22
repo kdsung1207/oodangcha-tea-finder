@@ -14,13 +14,61 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      signups: {
+        Row: {
+          contact: string
+          created_at: string
+          id: string
+          name: string
+          tea_result: string
+          timeslot: string
+        }
+        Insert: {
+          contact: string
+          created_at?: string
+          id?: string
+          name: string
+          tea_result: string
+          timeslot: string
+        }
+        Update: {
+          contact?: string
+          created_at?: string
+          id?: string
+          name?: string
+          tea_result?: string
+          timeslot?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      reserve_tea_timeslot: {
+        Args: {
+          p_capacity?: number
+          p_contact: string
+          p_name: string
+          p_tea_result: string
+          p_timeslot: string
+        }
+        Returns: {
+          contact: string
+          created_at: string
+          id: string
+          name: string
+          tea_result: string
+          timeslot: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "signups"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
       [_ in never]: never
